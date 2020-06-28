@@ -1,6 +1,6 @@
-const path =  require('path')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const HTMLWebpackPlugine = require('html-webpack-plugin')
+const path = require('path')
+const {CleanWebpackPlugin} = require('clean-webpack-plugin')
+const HTMLWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
@@ -10,15 +10,19 @@ const isDev = !isProd
 const filename = ext => isDev ? `bundle.${ext}` : `bundle.[hash].${ext}`
 
 const jsLoaders = () => {
-  const loaders = [{
-    loader: 'babel-loader',
-    options: {
-      presets: ['@babel/preset-env']
+  const loaders = [
+    {
+      loader: 'babel-loader',
+      options: {
+        presets: ['@babel/preset-env']
+      }
     }
-  }]
+  ]
+
   if (isDev) {
-    loaders.push('eslint-loader ')
+    loaders.push('eslint-loader')
   }
+
   return loaders
 }
 
@@ -34,7 +38,7 @@ module.exports = {
     extensions: ['.js'],
     alias: {
       '@': path.resolve(__dirname, 'src'),
-      '@core': path.resolve(__dirname, 'src/core '),
+      '@core': path.resolve(__dirname, 'src/core')
     }
   },
   devtool: isDev ? 'source-map' : false,
@@ -44,10 +48,10 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
-    new HTMLWebpackPlugine({
+    new HTMLWebpackPlugin({
       template: 'index.html',
       minify: {
-        remiveComments: isProd,
+        removeComments: isProd,
         collapseWhitespace: isProd
       }
     }),
@@ -74,7 +78,7 @@ module.exports = {
             }
           },
           'css-loader',
-          'sass-loader',
+          'sass-loader'
         ],
       },
       {
@@ -82,6 +86,6 @@ module.exports = {
         exclude: /node_modules/,
         use: jsLoaders()
       }
-    ],
+    ]
   }
 }
