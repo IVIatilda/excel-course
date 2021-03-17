@@ -39,7 +39,8 @@ module.exports = {
     extensions: ['.js'],
     alias: {
       '@': path.resolve(__dirname, 'src'),
-      '@core': path.resolve(__dirname, 'src/core')
+      '@core': path.resolve(__dirname, 'src/core'),
+      '@redux': path.resolve(__dirname, 'src/redux')
     }
   },
   devtool: isDev ? 'source-map' : false,

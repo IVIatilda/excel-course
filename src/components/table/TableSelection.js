@@ -2,22 +2,26 @@ export class TableSelection {
   static className = 'selected'
 
   constructor() {
-    this.grop = []
+    this.group = []
     this.current = null
   }
 
   select($el) {
     this.clear()
-    this.grop.push($el)
     $el.focus().addClass(TableSelection.className)
+    this.group.push($el)
     this.current = $el
   }
 
   clear() {
-    this.grop.forEach($el => {
+    this.group.forEach($el => {
       $el.removeClass(TableSelection.className)
     })
-    this.grop = []
+    this.group = []
+  }
+
+  get selectedIds() {
+    return this.group.map( $el => $el.id())
   }
 
   selectGroup($root, start, finish) {
@@ -35,9 +39,21 @@ export class TableSelection {
     for (let i = start.row; i <= finish.row; i++) {
       for (let j = start.col; j <= finish.col; j++) {
         const $cell = $root.find(`[data-id="${i}:${j}"]`)
-        this.grop.push($cell)
+        this.group.push($cell)
         $cell.addClass(TableSelection.className)
       }
     }
+  }
+
+  /*
+  selectGroup($grop = []) {
+    this.clear()
+    this.group = $grop
+    this.group.forEach($el => $el.addClass(TableSelection.className))
+  }
+  */
+
+  applyStyle(style) {
+    this.group.forEach($el => $el.css(style))
   }
 }
